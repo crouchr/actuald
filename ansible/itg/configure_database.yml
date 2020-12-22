@@ -39,7 +39,7 @@
       when: is_root_password_set.rc == 0
 
     - name: Create the actual table
-      command: mysql -u root -p {{ sql_root_password }} < /tmp/actual_table.sql
+      command: mysql "-u root -p {{ sql_root_password }} < /tmp/actual_table.sql"
       when: is_root_password_set.rc == 0
 
     - name: Remove the actual table sql file from the server
