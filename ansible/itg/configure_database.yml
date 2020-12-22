@@ -1,7 +1,8 @@
 ---
 - hosts: metmini-itg
   become: yes
-  sql_root_password: "secretsql"
+  vars:
+    sql_root_password: "secretsql"
 
   tasks:
 
