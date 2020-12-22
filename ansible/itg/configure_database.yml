@@ -1,6 +1,8 @@
 ---
 - hosts: metmini-itg
   become: yes
+  sql_root_password: "secretsql"
+
   tasks:
 
     - name: Run mysql_install_db
@@ -19,14 +21,23 @@
       when: is_root_password_set.rc == 0
 
     - name: Set root password
-      mysql_user: user=root password="secretsql" host=localhost
+      mysql_user: user=root password={{ sql_root_password }} host=localhost
       when: is_root_password_set.rc == 0
 
     - name: Create metmini database
       mysql_db:
         name: metminidb
         login_user: root
-        login_password: "secretsql"
+        login_password: {{mysql_root_password }}
         login_host: localhost
         state: present
       when: is_root_password_set.rc == 0
+
+    - name: copy actual_table.sql to server
+      template: src=actual_table.sql dest=/tmp/actual_table.sql; owner=root group=root
+
+    - name: sql the thing into MySQL
+      command: mysql "-u root -p{{ mysql_root_password }} < /tmp/actual_table.sql"
+
+    - name: remove the sql file from the server
+      command: rm -f /tmp/actual_table.sql
