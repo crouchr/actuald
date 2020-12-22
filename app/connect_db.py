@@ -1,6 +1,7 @@
 # fixme : note host is localhost
 import mysql.connector
 
+
 def connect_database(hostname, db_name):
     """
 
