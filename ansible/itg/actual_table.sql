@@ -1,3 +1,4 @@
+USE metminidb;
 CREATE TABLE actual
 (
 id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -32,4 +33,5 @@ ts_epoch INT NOT NULL,
 sunrise_local TIMESTAMP NOT NULL,
 sunset_local TIMESTAMP NOT NULL
 );
+
 
