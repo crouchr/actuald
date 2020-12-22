@@ -28,7 +28,7 @@
       mysql_db:
         name: metminidb
         login_user: root
-        login_password: {{ sql_root_password }}
+        login_password: "{{ sql_root_password }}"
         login_host: localhost
         state: present
       when: is_root_password_set.rc == 0
