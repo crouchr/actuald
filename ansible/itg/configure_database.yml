@@ -35,7 +35,7 @@
       when: is_root_password_set.rc == 0
 
     - name: Copy actual_table.sql to server
-      template: src=actual_table.sql dest=/tmp/actual_table.sql; owner=root group=root
+      template: src=actual_table.sql dest=/tmp/actual_table.sql owner=root group=root
       when: is_root_password_set.rc == 0
 
     - name: Create the actual table
