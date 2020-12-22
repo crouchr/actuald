@@ -33,14 +33,14 @@
         state: present
       when: is_root_password_set.rc == 0
 
-    - name: copy actual_table.sql to server
+    - name: Copy actual_table.sql to server
       template: src=actual_table.sql dest=/tmp/actual_table.sql; owner=root group=root
     when: is_root_password_set.rc == 0
 
-    - name: create the actual table
+    - name: Create the actual table
       command: mysql "-u root -p{{ mysql_root_password }} < /tmp/actual_table.sql"
     when: is_root_password_set.rc == 0
 
-    - name: remove the actual table sql file from the server
+    - name: Remove the actual table sql file from the server
       command: rm -f /tmp/actual_table.sql
     when: is_root_password_set.rc == 0
