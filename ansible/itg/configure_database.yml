@@ -30,4 +30,3 @@
         login_host: localhost
         state: present
       when: is_root_password_set.rc == 0
-
