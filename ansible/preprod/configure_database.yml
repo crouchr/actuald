@@ -18,7 +18,7 @@
       template: src=actual_table.sql dest=/tmp/actual_table.sql owner=root group=root
 
     - name: Create the actual table
-      command: mysql "-u root -p {{ sql_root_password }} < /tmp/actual_table.sql"
+      command: mysql "-u root -p{{ sql_root_password }} < /tmp/actual_table.sql"
 
     - name: Remove the actual table sql file from the server
       command: rm -f /tmp/actual_table.sql
