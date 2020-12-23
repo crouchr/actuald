@@ -1,12 +1,10 @@
 ---
 - hosts: metmini-prd
-  become: yes
   vars:
     sql_root_password: 'secretsql'
 
   tasks:
 
-  - name: Simple select query to metminidb/actual
-    community.mysql.mysql_query:
-    login_db: metminidb
-    query: SELECT * FROM actual where location='Stockcross, UK'
+    - name: Retrieve records from test database
+      command: mysql -u root -p secretsql database metminidb select * from actual
+
