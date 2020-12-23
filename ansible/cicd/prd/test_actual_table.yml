@@ -1,0 +1,20 @@
+---
+- hosts: metmini-prd
+  become: yes
+  vars:
+    sql_root_password: 'secretsql'
+
+  tasks:
+
+    - name: Retrieve stuff from mysql
+      command: >
+      mysql --user=root --password=secretsql metminidb
+      --host=localhost --batch --skip-column-names
+      --execute="SELECT * from actual where location='Stockcross, UK'"
+      register: stuff
+      check_mode: no
+      changed_when: False
+
+    - name: Do something with stuff
+      debug: "{{ item }}"
+      with_items: stuff.stdout_lines
