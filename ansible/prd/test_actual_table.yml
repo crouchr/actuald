@@ -8,8 +8,8 @@
 
     - name: Retrieve stuff from mysql
       command: >
-      mysql --user=root --password=secretsql metminidb
-      --host=localhost --batch --skip-column-names
+      mysql --user=root --password=secretsql database metminidb
+      --batch --skip-column-names
       --execute="SELECT * from actual where location='Stockcross, UK'"
       register: stuff
       check_mode: no
