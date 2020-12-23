@@ -2,7 +2,7 @@
 - hosts: xw6600
   tasks:
     - name: Change directory to vagrant-machines
-      command: cd /home/crouchr/vagrant-machines/slackl14-docker
+      command: cd /home/crouchr/vagrant-machines/slack14-docker
       gather_facts: no
 
     - name: Start up slack box
