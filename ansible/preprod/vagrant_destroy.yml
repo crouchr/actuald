@@ -1,0 +1,10 @@
+---
+- hosts: metmini-preprod
+  tasks:
+    - name: Change directory to vagrant-machines
+      command: cd /home/crouchr/vagrant-machines/slackl14-docker
+
+    - name: Start up slack box
+      command: vagrant box destroy -f
+
+
