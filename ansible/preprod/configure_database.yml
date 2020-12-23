@@ -1,5 +1,5 @@
 ---
-- hosts: metmini-itg
+- hosts: metmini-preprod
   become: yes
   vars:
     sql_root_password: 'secretsql'

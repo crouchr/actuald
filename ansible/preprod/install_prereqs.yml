@@ -1,5 +1,5 @@
 ---
-- hosts: metmini-itg
+- hosts: metmini-preprod
   become: yes
   tasks:
     - name: Install Python PIP
