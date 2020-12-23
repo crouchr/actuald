@@ -5,7 +5,7 @@
 
   tasks:
     - name: Retrieve records from test database
-      command: mysql -u root -p secretsql --database metminidb -s --execute "select * from actual"
+      command: mysql -u root -psecretsql --database metminidb -s --execute "select * from actual limit 10"
       register: query_result
 
     - name: Display output
