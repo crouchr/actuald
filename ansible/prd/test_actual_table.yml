@@ -6,15 +6,7 @@
 
   tasks:
 
-    - name: Retrieve stuff from mysql
-      command: >
-      mysql --user=root --password=secretsql database metminidb
-      --batch --skip-column-names
-      --execute="SELECT * from actual where location='Stockcross, UK'"
-      register: stuff
-      check_mode: no
-      changed_when: False
-
-    - name: Do something with stuff
-      debug: "{{ item }}"
-      with_items: stuff.stdout_lines
+  - name: Simple select query to metminidb/actual
+    community.mysql.mysql_query:
+    login_db: metminidb
+    query: SELECT * FROM actual where location='Stockcross, UK'
