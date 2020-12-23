@@ -6,9 +6,9 @@
   tasks:
     - name: Retrieve records from test database
       command: >
-      mysql -u root -p{{ sql_root_password }}
-      --database metminidb -s
-      --execute "select * from actual order by id desc limit 10"
+        mysql -u root -p{{ sql_root_password }}
+        --database metminidb -s
+        --execute "select * from actual order by id desc limit 10"
       register: query_result
 
     - name: Display output
