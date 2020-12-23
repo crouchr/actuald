@@ -9,5 +9,5 @@
       register: query_result
 
     - name: Display output
-      debug: "{{ item }}"
+      debug: msg="{{ item }}"
       with_items: query_result.stdout_lines
