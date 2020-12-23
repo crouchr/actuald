@@ -2,15 +2,15 @@
 - hosts: metmini-prd
   vars:
     sql_root_password: 'secretsql'
+    sql_db_name: 'metminidb'
 
   tasks:
     - name: Retrieve records from test database
       command: >
         mysql -u root -p{{ sql_root_password }}
-        --database metminidb -s
+        --database {{ sql_db_name }} -s
         --execute "select * from actual order by id desc limit 10"
       register: query_result
 
     - name: Display output
       debug: msg="{{ query_result.stdout_lines }}"
-
