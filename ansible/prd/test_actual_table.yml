@@ -5,7 +5,7 @@
 
   tasks:
     - name: Retrieve records from test database
-      command: mysql -u root -psecretsql --database metminidb -s --execute "select * from actual"
+      command: mysql -u root -p {{ sql_root_password }} --database metminidb -s --execute "select * from actual"
       register: query_result
 
     - name: Display output
