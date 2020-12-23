@@ -8,5 +8,6 @@
       command: mysql -u root -psecretsql --database metminidb --execute "select * from actual"
       register: query_result
 
-    - debug:
-      var: query_result.stdout_lines
+    - name: Display output
+      debug: "{{ item }}"
+      with_items: query_result.stdout_lines
