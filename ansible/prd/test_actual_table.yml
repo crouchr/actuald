@@ -5,9 +5,9 @@
 
   tasks:
     - name: Retrieve records from test database
-      command: mysql -u root -psecretsql --database metminidb --execute "select * from actual"
+      command: mysql -u root -psecretsql --database metminidb -s --execute "select * from actual"
       register: query_result
 
     - name: Display output
-      debug: msg="{{ item }}"
-      with_items: query_result.stdout_lines
+      debug: msg="{{ query_result.stdout_lines }}"
+
