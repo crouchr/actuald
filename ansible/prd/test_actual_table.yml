@@ -4,7 +4,9 @@
     sql_root_password: 'secretsql'
 
   tasks:
-
     - name: Retrieve records from test database
       command: mysql -u root -psecretsql --database metminidb --execute "select * from actual"
+      register: query_result
 
+    - debug:
+      var: query_result.stdout_lines
