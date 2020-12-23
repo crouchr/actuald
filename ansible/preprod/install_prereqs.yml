@@ -1,0 +1,16 @@
+---
+- hosts: metmini-itg
+  become: yes
+  tasks:
+    - name: Install Python PIP
+      yum: name=python-pip state=present
+
+    - name: Install Python Setup Tools
+      yum: name=python-setuptools state=present
+
+    - name: Install MariaDB package(s)
+      yum: name=mariadb-server state=present
+
+    - name: Install Ansible mysql_user module dependencies
+      pip:
+        name: PyMySQL
