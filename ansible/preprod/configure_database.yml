@@ -10,7 +10,7 @@
       command: mysql_install_db --datadir=/data/db
 
     - name: Start MariaDB service
-      service: name=mariadb state=started enabled=yes
+      service: name=mysqld state=started enabled=yes
 
     - name: Is root password set?
       command: mysql -u root --execute "SELECT NOW()"
