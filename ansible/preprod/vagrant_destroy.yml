@@ -1,11 +1,11 @@
 ---
 - hosts: xw6600
+  gather_facts: no
   tasks:
     - name: Change directory to vagrant-machines
-      gather_facts: no
       command: cd /home/crouchr/vagrant-machines/slack14-docker
 
     - name: Start up slack box
       command: vagrant box destroy -f
-      gather_facts: no
+
 
