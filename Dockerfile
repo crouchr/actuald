@@ -2,6 +2,7 @@
 # Build metmini actuald container
 # i.e. the Daemon that collects met data and stores in Database
 # Can something smaller be built from Alpine or a Python Docker image ?
+# https://stackoverflow.com/questions/46503947/how-to-get-pipenv-running-in-docker
 
 FROM registry:5000/gold-centos7:1.0.0
 LABEL author="Richard Crouch"
