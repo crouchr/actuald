@@ -1,5 +1,6 @@
 ---
 - hosts: docker-dev
+  become: yes
 
   tasks:
     - name: Copy docker-compose to server
