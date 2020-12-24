@@ -6,7 +6,7 @@
 version: '3'
 
 services:
-  metmini-backend:
+  actuald:
     image: registry:5000/actuald:1.0.0
     environment:
       SQL_DB_HOSTNAME: 192.168.1.180
