@@ -18,7 +18,8 @@ elif stage == 'PRD':
     locations = [
         {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"},
         {"location": "Fastnet Rock, Ireland", "lat": "51.3889", "lon": "-9.6036"},
-        {"location": "Snake Pass, UK", "lat": "53.4326", "lon": "-1.8673"}
+        {"location": "Snake Pass, UK", "lat": "53.4326", "lon": "-1.8673"},
+        {"location": "Norwich, UK", "lat": "52.6310", "lon": "1.2970"}
     ]
 else:
     locations = [
