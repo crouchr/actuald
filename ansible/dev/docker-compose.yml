@@ -1,0 +1,15 @@
+# This runs on the Docker Host
+# add to rc.local:
+# docker-compose -d -f /etc/docker-compose.yml up
+# This is for the production environment on mrdell
+# Container version is locked to a version
+
+version: '3'
+
+services:
+  actuald:
+    image: registry:5000/actuald:1.0.3
+    environment:
+      SQL_DB_HOSTNAME: 192.168.1.180
+      STAGE: PRD
+
