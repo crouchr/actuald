@@ -15,7 +15,8 @@ if (stage == 'DEV' or stage == 'IDE'):
     locations = [
         {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"},
         {"location": "Chamonix, FR", "lat": "45.9237", "lon": "6.8694"},
-        {"location": "New York City, US", "lat": "40.7125", "lon": "-74.0060"}
+        {"location": "New York City, US", "lat": "40.7125", "lon": "-74.0060"},
+        {"location": "San Francisco, US", "lat": "37.7749", "lon": "-122.4194"}
     ]
 elif stage == 'PRD':
     locations = [
@@ -23,7 +24,8 @@ elif stage == 'PRD':
         {"location": "Fastnet Rock, Ireland", "lat": "51.3889", "lon": "-9.6036"},
         {"location": "Norwich, UK", "lat": "52.6310", "lon": "1.2970"},
         {"location": "Chamonix, FR", "lat": "45.9237", "lon": "6.8694"},
-        {"location": "New York City, US", "lat": "40.7125", "lon": "-74.0060"}
+        {"location": "New York City, US", "lat": "40.7125", "lon": "-74.0060"},
+        {"location": "San Francisco, US", "lat": "37.7749", "lon": "-122.4194"}
     ]
 else:
     locations = [
