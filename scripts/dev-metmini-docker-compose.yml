@@ -2,12 +2,13 @@
 # add to rc.local:
 # docker-compose -d -f /etc/docker-compose.yml up
 # This is for the development environment on xw6600
+# Container version is 'latest'
 
 version: '3'
 
 services:
   actuald:
-    image: registry:5000/actuald:1.0.1
+    image: registry:5000/actuald:latest
     environment:
       SQL_DB_HOSTNAME: 192.168.1.15
       STAGE: DEV
