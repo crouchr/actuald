@@ -12,7 +12,8 @@ stage = os.environ['STAGE']
 if stage == 'DEV':
     locations = [
         {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"},
-        {"location": "Cowes, UK", "lat": "50.7628", "lon": "-1.3005"}
+        {"location": "Cowes, UK", "lat": "50.7628", "lon": "-1.3005"},
+        {"location": "Norwich, UK", "lat": "52.6310", "lon": "1.2970"}
     ]
 elif stage == 'PRD':
     locations = [
