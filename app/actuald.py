@@ -93,10 +93,14 @@ def insert_rec_to_db(mydb, mycursor, weather_info):
 
 def main():
     try:
-        log_msg = "metmini-backend started"
+        log_msg = "actuald started"
         syslog.syslog(log_msg)
 
-        hostname = os.environ['SQL_DB_HOSTNAME']
+        if 'SQL_DB_HOSTNAME' in os.environ:
+            hostname = os.environ['SQL_DB_HOSTNAME']
+        else:
+            hostname = '192.168.1.15'   # my dev machine
+
         print('SQL database hostname : ' + hostname.__str__())
         mydb, mycursor = connect_db.connect_database(hostname, "metminidb")
 

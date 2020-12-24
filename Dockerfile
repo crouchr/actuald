@@ -11,9 +11,6 @@ LABEL description="MetMini ActualD container"
 # FIXME : pipenv complains if not here - can this be added to gold-centos ?
 ENV LC_ALL=en_US.utf-8
 ENV LANG=en_US.utf-8
-# http://bugs.python.org/issue19846
-# > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
-#ENV LANG C.UTF-8
 
 # Install pyenv - https://gist.github.com/jprjr/7667947
 # =====================================================

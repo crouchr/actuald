@@ -6,10 +6,12 @@
 # FIXME - there may be a utf-8 issue with llanfaifechen - needs more investigation - caused exception
 
 import os
+if 'STAGE' in os.environ:
+    stage = os.environ['STAGE']
+else:
+    stage = 'IDE'   # i.e. running in PyCharm
 
-stage = os.environ['STAGE']
-
-if stage == 'DEV':
+if (stage == 'DEV' or stage == 'IDE'):
     locations = [
         {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"},
         {"location": "Cowes, UK", "lat": "50.7628", "lon": "-1.3005"},

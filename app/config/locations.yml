@@ -1,0 +1,18 @@
+# This work in progress - it will contain the locations to be measured
+---
+ide_locations:
+
+dev_locations:
+
+itg_locations:
+
+preprod_locations:
+
+prd_locations:
+  - name: 'Stockcross, UK'
+    - lat: 51.41460037
+    - lon: 1.37486378
+
+
+  {"location": "Norwich, UK", "lat": "52.6310", "lon": "1.2970"}
+  -
