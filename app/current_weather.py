@@ -3,11 +3,13 @@ import requests
 import json
 from datetime import datetime
 
+# my modules from web.ermin
+import metfuncs
+
 # my modules
 import julian
 import time
 from pprint import pprint
-import met_funcs
 import ts_funcs
 
 
@@ -56,13 +58,13 @@ def get_current_weather_info(location, lat, lon):
         weather_info['sunset_local']  = ts_funcs.epoch_to_local(data['current']['sunset'])      # api = timestamp from the API in UNIX UTC
 
         weather_info['pressure']      = data['current']['pressure']                 # api = sea-level hPa
-        weather_info['wind_speed']    = round(met_funcs.m_per_sec_to_knots(data['current']['wind_speed'])  ,1)   # api = metres/s
+        weather_info['wind_speed']    = round(metfuncs.m_per_sec_to_knots(data['current']['wind_speed'])  ,1)   # api = metres/s
 
         # api returns m/s
-        weather_info['wind_strength'] = met_funcs.kph_to_beaufort(met_funcs.metres_per_sec_to_kph(data['current']['wind_speed'])) # metres/s
+        weather_info['wind_strength'] = metfuncs.kph_to_beaufort(metfuncs.metres_per_sec_to_kph(data['current']['wind_speed'])) # metres/s
 
         weather_info['wind_deg']      = data['current']['wind_deg']
-        weather_info['wind_quadrant'] = met_funcs.wind_deg_to_quadrant(weather_info['wind_deg'])
+        weather_info['wind_quadrant'] = metfuncs.wind_deg_to_quadrant(weather_info['wind_deg'])
         weather_info['temp']          = round(data['current']['temp'], 1)
         weather_info['feels_like']    = round(data['current']['feels_like'], 1)
         weather_info['dew_point']     = round(data['current']['dew_point'], 1)
@@ -73,7 +75,7 @@ def get_current_weather_info(location, lat, lon):
 
     # optional fields ?
         if 'wind_gust' in data['current']:
-            weather_info['wind_gust']  = round(met_funcs.m_per_sec_to_knots(data['current']['wind_gust']) ,1)
+            weather_info['wind_gust']  = round(metfuncs.m_per_sec_to_knots(data['current']['wind_gust']) ,1)
         else:
             weather_info['wind_gust'] = "NULL"  # fixme = does this import into MySQL as a NULL ?
 

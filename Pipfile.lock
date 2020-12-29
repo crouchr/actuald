@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b7bdd0db8bb64635657a70da0a3d202f8ab520df37d832a5d3642bc495d4e6bf"
+            "sha256": "dc5a7d83771f57f5bc04d8c88765a0b6b94201504586dc5f1049637cbeaef616"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -12,6 +12,11 @@
                 "name": "pypi",
                 "url": "https://pypi.org/simple",
                 "verify_ssl": true
+            },
+            {
+                "name": "ermin",
+                "url": "http://192.168.1.102/python-packages",
+                "verify_ssl": false
             }
         ]
     },
@@ -53,6 +58,14 @@
                 "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"
             ],
             "version": "==1.1.1"
+        },
+        "metfuncs": {
+            "hashes": [
+                "sha256:317de8304d7defc1b604a936bb6d701da9e682a37fae1ac7848799669b6147e0",
+                "sha256:3a138d918178846ffb5e1fb721f023dd93f89b942a4f385f73a5a08bdbf5a350"
+            ],
+            "index": "ermin",
+            "version": "==1.0.6"
         },
         "mysql-connector-python": {
             "hashes": [
