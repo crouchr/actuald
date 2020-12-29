@@ -1,6 +1,6 @@
 ---
 - hosts: docker-dev
-  become: yes
+  become: no
   vars:
     sql_root_password: 'secretsql'
 
