@@ -8,13 +8,9 @@ version: '3'
 
 services:
   actuald:
+    container_name: actuald
     image: registry:5000/actuald:latest
     environment:
       SQL_DB_HOSTNAME: 192.168.1.15
       STAGE: DEV
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 3
-        window: 120s
+
