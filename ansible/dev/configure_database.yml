@@ -36,3 +36,6 @@
 
     - name: Remove the actual table sql file from the server
       command: rm -f /tmp/actual_table.sql
+
+    - name: Remove the forecasts table sql file from the server
+      command: rm -f /tmp/forecasts_table.sql
