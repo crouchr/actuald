@@ -20,6 +20,9 @@
     - name: Copy forecasts_table.sql to server
       template: src=forecasts_table.sql dest=/tmp/forecasts_table.sql owner=vagrant group=users
 
+    - name: Copy grant_permissions.sql to server
+      template: src=grant_permissions.sql dest=/tmp/grant_permissions.sql owner=vagrant group=users
+
     - name: "Create metminidb actual table"
       become: yes
       shell: "mysql -u root -p{{ sql_root_password }} < /tmp/actual_table.sql"
@@ -32,6 +35,12 @@
       ignore_errors: yes
       failed_when: false
 
+    - name: "Grant permissions"
+      become: yes
+      shell: "mysql -u root -p{{ sql_root_password }} < /tmp/grant_permissions.sql"
+      ignore_errors: yes
+      failed_when: false
+
     - name: Remove the actual table sql file from the server
       file:
         path: /tmp/actual_table.sql
@@ -40,4 +49,9 @@
     - name: Remove the forecasts table sql file from the server
       file:
         path: /tmp/forecasts_table.sql
+        state: absent
+
+    - name: Remove the grant permissions sql file from the server
+      file:
+        path: /tmp/grant_permissions.sql
         state: absent
