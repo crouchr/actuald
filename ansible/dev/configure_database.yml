@@ -20,8 +20,6 @@
     - name: Copy forecasts_table.sql to server
       template: src=forecasts_table.sql dest=/tmp/forecasts_table.sql owner=vagrant group=users
 
-#    - name: Create the actual table
-#      command: mysql "-u root -p{{ sql_root_password }} < /tmp/actual_table.sql"
     - name: "Create metminidb actual table"
       become: yes
       shell: "mysql -u root -p{{ sql_root_password }} < /tmp/actual_table.sql"
