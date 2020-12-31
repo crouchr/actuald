@@ -35,7 +35,11 @@
       failed_when: false
 
     - name: Remove the actual table sql file from the server
-      command: rm -f /tmp/actual_table.sql
+      file:
+        path: /tmp/actual_table.sql
+        state: absent
 
     - name: Remove the forecasts table sql file from the server
-      command: rm -f /tmp/forecasts_table.sql
+      file:
+        path: /tmp/forecasts_table.sql
+        state: absent
