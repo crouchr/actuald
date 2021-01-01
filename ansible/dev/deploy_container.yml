@@ -6,5 +6,5 @@
     - name: Copy docker-compose to server
       template: src=docker-compose.yml dest=/etc/docker-compose.yml owner=root group=root
 
-    - name: Start up  the new container
+    - name: Start up the new container
       command: /usr/bin/docker-compose -f /etc/docker-compose.yml -d up
