@@ -5,18 +5,14 @@
 # for free tier of 1000 api calls per day I can have 6 locations
 # FIXME - there may be a utf-8 issue with llanfaifechen - needs more investigation - caused exception
 
-import os
-if 'STAGE' in os.environ:
-    stage = os.environ['STAGE']
-else:
-    stage = 'IDE'   # i.e. running in PyCharm
+import actuald_funcs
+
+stage = actuald_funcs.get_stage()
 
 if (stage == 'DEV' or stage == 'IDE'):
     locations = [
         {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"},
         {"location": "Chamonix, FR", "lat": "45.9237", "lon": "6.8694"},
-        {"location": "New York City, US", "lat": "40.7125", "lon": "-74.0060"},
-        {"location": "San Francisco, US", "lat": "37.7749", "lon": "-122.4194"}
     ]
 elif stage == 'PRD':
     locations = [

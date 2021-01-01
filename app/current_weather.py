@@ -27,6 +27,7 @@ def get_current_weather_info(location, lat, lon):
     # Free version - FIXME : read from an ENV var
     API_KEY = 'ab4b5be3e0bf875659c638ded9decd79'
     url = "https://api.openweathermap.org/data/2.5/onecall?lat=%s&lon=%s&appid=%s&units=metric&exclude=minutely,hourly,daily" % (lat, lon, API_KEY)
+    global api_calls
 
     try:
         weather_info = {}
@@ -36,11 +37,12 @@ def get_current_weather_info(location, lat, lon):
         utc_now = datetime.utcnow()
         hour_utc = utc_now.hour
         weather_info['hour_utc'] = hour_utc
-        print("hour_utc : " + hour_utc.__str__())
+        #print("hour_utc : " + hour_utc.__str__())
 
         response = requests.get(url)
+
         data = json.loads(response.text)
-        print(data)
+        print("Response from OpenWeatherAPI : " + data.__str__())
         time.sleep(2)                   # crude rate limit
 
         weather_info['lat']           = data['lat']
@@ -104,7 +106,7 @@ def get_current_weather_info(location, lat, lon):
         weather_info['description']   = data['current']['weather'][0]['description']
 
     except Exception as e:
-        print(e)
+        print("get_current_weather_info() : error : " + e.__str__())
         flag = False
 
     return flag, weather_info

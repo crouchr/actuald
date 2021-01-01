@@ -4,12 +4,13 @@
 
 import time
 from pprint import pprint
-import syslog
 import os
 
 import current_weather
 import connect_db
 import locations
+import actuald_funcs
+
 
 
 # fixme - add exception handling
@@ -92,46 +93,55 @@ def insert_rec_to_db(mydb, mycursor, weather_info):
 
 
 def main():
+    api_calls = 0
+    start_time = time.time()
+
     try:
         log_msg = "actuald started"
-        syslog.syslog(log_msg)
+        print(log_msg)
 
         if 'SQL_DB_HOSTNAME' in os.environ:
             hostname = os.environ['SQL_DB_HOSTNAME']
         else:
             hostname = '192.168.1.15'   # my dev machine
 
-        print('SQL database hostname : ' + hostname.__str__())
+        stage = actuald_funcs.get_stage()
+
         mydb, mycursor = connect_db.connect_database(hostname, "metminidb")
 
         while True:
-            print("-----------------")
+            print("---------------")
             print("Local time (not UTC) : " + time.ctime())
+            print("SQL database hosted on : " + hostname)
+            print("Stage : " + stage)
+
             for place in locations.locations:
                 flag, weather_info = current_weather.get_current_weather_info(place['location'], place['lat'], place['lon'])
-
+                api_calls += 1
                 if flag:                # API data read OK
                     pprint(weather_info)
                     insert_rec_to_db(mydb, mycursor, weather_info)
-                    log_msg = "Read API weather data OK for " + place['location'].__str__()
-                    #syslog.syslog(log_msg)
+                    log_msg = "Read OpenWeatherAPI data OK for " + place['location'].__str__()
                     print(log_msg)
                     time.sleep(5)       # crude rate-limit
                 else:                   # API data not read OK
-                    log_msg = "ERROR : failed to read API weather data for " + place['location'].__str__()
+                    log_msg = "main() : error : failed to read API weather data for " + place['location'].__str__()
                     sleep_secs = 60         # wait a minute to let network fault restore
-                    #syslog.syslog(log_msg)
                     print(log_msg)
                     print("short waiting...")
                     time.sleep(sleep_secs)
+
+            # update stats
+            now = time.time()
+            running_time = int(now - start_time)
+            print("stats => " + api_calls.__str__() + " API call(s) in " + running_time.__str__() + " secs")
 
             sleep_secs = 600    # normal poll every 10 minutes
             print("waiting...")
             time.sleep(sleep_secs)
 
     except Exception as e:
-        log_msg = "metmini-backed : exception : " + e.__str__()
-        #syslog.syslog(log_msg)
+        log_msg = "main() : error : " + e.__str__()
         print(log_msg)
 
 
