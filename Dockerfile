@@ -50,7 +50,7 @@ USER python_user
 # Install Python dependencies
 RUN pip3 install pipenv
 COPY Pipfile* ./
-RUN pipenv install --system --deploy
+RUN pipenv install --system --deploy --verbose
 
 WORKDIR /app
 
