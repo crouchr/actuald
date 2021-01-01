@@ -11,4 +11,4 @@ services:
     environment:
       SQL_DB_HOSTNAME: 192.168.1.182
       STAGE: DEV
-
+      VERSION: $version

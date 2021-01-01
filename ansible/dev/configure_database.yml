@@ -15,13 +15,13 @@
         state: present
 
     - name: Copy actual_table.sql to server
-      template: src=actual_table.sql dest=/tmp/actual_table.sql owner=vagrant group=users
+      template: src=../common/actual_table.sql dest=/tmp/actual_table.sql owner=vagrant group=users
 
     - name: Copy forecasts_table.sql to server
-      template: src=forecasts_table.sql dest=/tmp/forecasts_table.sql owner=vagrant group=users
+      template: src=../common/forecasts_table.sql dest=/tmp/forecasts_table.sql owner=vagrant group=users
 
     - name: Copy grant_permissions.sql to server
-      template: src=grant_permissions.sql dest=/tmp/grant_permissions.sql owner=vagrant group=users
+      template: src=../common/grant_permissions.sql dest=/tmp/grant_permissions.sql owner=vagrant group=users
 
     - name: "Create metminidb actual table"
       become: yes
