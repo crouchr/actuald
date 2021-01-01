@@ -1,8 +1,6 @@
 # This runs on the Docker Host
 # add to rc.local:
 # docker-compose -d -f /etc/docker-compose.yml up
-# This is for the production environment on mrdell
-# Container version is locked to a version
 
 version: '3'
 
