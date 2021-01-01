@@ -1,5 +1,2 @@
-[bandit]
-exclude: /tests
-
-#assert_used:
-#  skips: ['*_test.py', 'test_*.py']
+# (optional) list skipped tests here:
+skips: ['B101']
