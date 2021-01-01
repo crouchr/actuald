@@ -1,6 +1,6 @@
 CREATE USER 'metmini' identified by 'metmini';
 CREATE USER 'grafanaReader' IDENTIFIED BY 'grafanasecret';
-GRANT SELECT ON metminidb.actual TO 'grafanaReader';
+GRANT SELECT ON metminidb.* TO 'grafanaReader';
 GRANT ALL ON metminidb.* to 'metmini' identified by 'metmini';
 FLUSH PRIVILEGES;
 -- SHOW GRANTS FOR 'metmini';
