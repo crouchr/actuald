@@ -11,4 +11,3 @@
 
     - name: Start up the new container
       shell: "/usr/bin/docker-compose -f /etc/docker-compose.yml up &"
-
