@@ -14,14 +14,15 @@ if stage == 'DEV' or stage == 'IDE':
         {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"},
         {"location": "Chamonix, FR", "lat": "45.9237", "lon": "6.8694"},
     ]
-elif stage == 'PRD':
+elif stage == 'PRD':    # 5 locations = 720 api calls per day
     locations = [
         {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"},
         {"location": "Yarmouth Harbour, UK", "lat": "50.7051", "lon": "-1.5027"},
+        {"location": "Lymington Harbour, UK", "lat": "50.7535", "lon": "-1.5283"},
         {"location": "Portsmouth, UK", "lat": "50.8198", "lon": "-1.0880"},
         {"location": "Cowes, UK", "lat": "50.7628", "lon": "-1.3005"}
     ]
-else:
+else:   # indicates a probable error
     locations = [
         {"location": "Bay of Biscay, Portugal", "lat": "45.5570", "lon": "-3.1632"}
     ]

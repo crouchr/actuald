@@ -5,8 +5,8 @@
 
 import time
 from pprint import pprint
-import os
 import sys
+import syslog
 
 import current_weather
 import connect_db
@@ -97,7 +97,7 @@ def insert_rec_to_db(mydb, mycursor, weather_info):
 def main():
     api_calls = 0
     start_time = time.time()
-    sleep_secs = 600  # normal poll every 10 minutes
+    sleep_secs = 600        # normal poll every 10 minutes
 
     try:
         log_msg = "actuald started"
@@ -106,6 +106,10 @@ def main():
         db_hostname = actuald_funcs.get_db_hostname()
         stage = actuald_funcs.get_stage()
         version = actuald_funcs.get_version()   # container version
+        if stage == 'DEV' or stage == 'IDE':
+            sleep_secs = 10
+            print("stage=" + stage + " caused sleep_secs to be modified to " + sleep_secs.__str__() + " secs")
+
 
         mydb, mycursor = connect_db.connect_database(db_hostname, "metminidb")
 
@@ -131,6 +135,8 @@ def main():
                     print(log_msg)
                     print("short waiting...")
                     time.sleep(sleep_secs_short)
+
+            syslog.syslog("Random message for debugging")   # FIXME: remove
 
             # update stats
             now = time.time()
