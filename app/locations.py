@@ -9,7 +9,7 @@ import actuald_funcs
 
 stage = actuald_funcs.get_stage()
 
-if (stage == 'DEV' or stage == 'IDE'):
+if stage == 'DEV' or stage == 'IDE':
     locations = [
         {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"},
         {"location": "Chamonix, FR", "lat": "45.9237", "lon": "6.8694"},
@@ -17,11 +17,9 @@ if (stage == 'DEV' or stage == 'IDE'):
 elif stage == 'PRD':
     locations = [
         {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"},
-        {"location": "Fastnet Rock, Ireland", "lat": "51.3889", "lon": "-9.6036"},
-        {"location": "Norwich, UK", "lat": "52.6310", "lon": "1.2970"},
-        {"location": "Chamonix, FR", "lat": "45.9237", "lon": "6.8694"},
-        {"location": "New York City, US", "lat": "40.7125", "lon": "-74.0060"},
-        {"location": "San Francisco, US", "lat": "37.7749", "lon": "-122.4194"}
+        {"location": "Yarmouth Harbour, UK", "lat": "50.7051", "lon": "-1.5027"},
+        {"location": "Portsmouth, UK", "lat": "50.8198", "lon": "-1.0880"},
+        {"location": "Cowes, UK", "lat": "50.7628", "lon": "-1.3005"}
     ]
 else:
     locations = [
@@ -40,3 +38,7 @@ else:
 # {"location": "Llanfairfechen, UK", "lat": "53.2528", "lon": "-3.9751"},
 # {"location": "Yarmouth Harbour, UK", "lat": "50.7051", "lon": "-1.5027"}
 # {"location": "Llanfairfechen, UK", "lat": "53.2528", "lon": "-3.9751"}
+# {"location": "Norwich, UK", "lat": "52.6310", "lon": "1.2970"},
+# {"location": "New York City, US", "lat": "40.7125", "lon": "-74.0060"},
+# {"location": "Chamonix, FR", "lat": "45.9237", "lon": "6.8694"},
+# {"location": "San Francisco, US", "lat": "37.7749", "lon": "-122.4194"}
