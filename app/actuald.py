@@ -6,7 +6,6 @@
 import time
 from pprint import pprint
 import sys
-import syslog
 
 import current_weather
 import connect_db
@@ -135,8 +134,6 @@ def main():
                     print(log_msg)
                     print("short waiting...")
                     time.sleep(sleep_secs_short)
-
-            syslog.syslog("Random message for debugging")   # FIXME: remove
 
             # update stats
             now = time.time()
