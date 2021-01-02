@@ -10,7 +10,7 @@
       shell: "version={{ lookup('env', 'version') }} stage={{ lookup('env', 'stage') }} sql_db_hostname={{ lookup('env', 'sql_db_hostname') }} /usr/bin/docker-compose -f /etc/docker-compose.yml pull"
 
     - name: Stop existing container
-        shell: "docker stop actuald"
+      shell: "docker stop actuald"
 
     - name: Start up the new container
       shell: "version={{ lookup('env', 'version') }} stage={{ lookup('env', 'stage') }} sql_db_hostname={{ lookup('env', 'sql_db_hostname') }} /usr/bin/docker-compose -f /etc/docker-compose.yml up &"
