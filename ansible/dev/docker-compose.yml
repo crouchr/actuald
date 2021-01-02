@@ -8,7 +8,9 @@ services:
   actuald:
     container_name: actuald
     image: registry:5000/actuald:$version
+    logging:
+      driver: syslog
     environment:
-      SQL_DB_HOSTNAME: $sql_db_hostname
       STAGE: $stage
       VERSION: $version
+      SQL_DB_HOSTNAME: $sql_db_hostname
