@@ -78,7 +78,7 @@ def get_current_weather_info(location, lat, lon):
         if 'wind_gust' in data['current']:
             weather_info['wind_gust']  = round(metfuncs.m_per_sec_to_knots(data['current']['wind_gust']) ,1)
         else:
-            weather_info['wind_gust'] = "NULL"  # fixme = does this import into MySQL as a NULL ?
+            weather_info['wind_gust'] = 0
 
         # if 'rain.1h' in data['current']:
         #     weather_info['rain']  = round(data['current']['rain.1h'], 1)      # rain volume for last hour (mm)
@@ -96,9 +96,9 @@ def get_current_weather_info(location, lat, lon):
             weather_info['snow'] = 0.0
 
         if 'uvi' in data['current']:
-            weather_info['uvi'] = data['current']['uvi']  # Midday UV index
+            weather_info['uvi'] = data['current']['uvi']    # Midday UV index
         else:
-            weather_info['uvi'] = -99.9                     # -99.9 = missing data
+            weather_info['uvi'] = 0.0
 
         # fixme - this is a list - so need to store it as a list ? - store a assume a single item list for now until understand the API response more
         weather_info['main']          = data['current']['weather'][0]['main']
