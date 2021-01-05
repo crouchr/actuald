@@ -105,9 +105,9 @@ def main():
         db_hostname = actuald_funcs.get_db_hostname()
         stage = actuald_funcs.get_stage()
         version = actuald_funcs.get_version()   # container version
-        if stage == 'DEV' or stage == 'IDE':
-            sleep_secs = 10
-            print("stage=" + stage + " caused sleep_secs to be modified to " + sleep_secs.__str__() + " secs")
+        # if stage == 'DEV' or stage == 'IDE':
+        #     sleep_secs = 10
+        #     print("stage=" + stage + " caused sleep_secs to be modified to " + sleep_secs.__str__() + " secs")
 
 
         mydb, mycursor = connect_db.connect_database(db_hostname, "metminidb")
@@ -142,9 +142,9 @@ def main():
             print("stats => version=" + version + ", " + api_calls.__str__() + " API call(s) in " + running_time.__str__() +
                   " secs, estimated api_calls_per_day=" + api_calls_per_day.__str__())
 
-            if (stage == 'DEV' or stage == 'IDE') and api_calls >= 10:
-                print("stage=" + stage + ", container exiting to not abuse API limit")
-                sys.exit(1)
+            # if (stage == 'DEV' or stage == 'IDE') and api_calls >= 10:
+            #     print("stage=" + stage + ", container exiting to not abuse API limit")
+            #     sys.exit(1)
 
             print("waiting...")
             time.sleep(sleep_secs)
