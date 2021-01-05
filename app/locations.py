@@ -11,8 +11,7 @@ stage = actuald_funcs.get_stage()
 
 if stage == 'DEV' or stage == 'IDE':
     locations = [
-        {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"},
-        {"location": "Chamonix, FR", "lat": "45.9237", "lon": "6.8694"},
+        {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"}
     ]
 elif stage == 'PRD':    # 5 locations = 720 api calls per day
     locations = [

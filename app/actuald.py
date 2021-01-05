@@ -155,5 +155,6 @@ def main():
 
 
 if __name__ == '__main__':
+    print('Waiting...')
     time.sleep(30)      # FIXME : hack to wait until other services are up
     main()
