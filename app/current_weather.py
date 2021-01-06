@@ -76,9 +76,9 @@ def get_current_weather_info(location, lat, lon):
 
     # optional fields ?
         if 'wind_gust' in data['current']:
-            weather_info['wind_gust']  = round(metfuncs.m_per_sec_to_knots(data['current']['wind_gust']) ,1)
+            weather_info['wind_gust'] = round(metfuncs.m_per_sec_to_knots(data['current']['wind_gust']) ,1)
         else:
-            weather_info['wind_gust'] = 0
+            weather_info['wind_gust'] = 0.0
 
         # if 'rain.1h' in data['current']:
         #     weather_info['rain']  = round(data['current']['rain.1h'], 1)      # rain volume for last hour (mm)
@@ -91,12 +91,12 @@ def get_current_weather_info(location, lat, lon):
             weather_info['rain'] = 0.0
 
         if 'snow' in data['current']:
-            weather_info['snow']  = round(data['current']['snow']['1h'], 1)      # snow volume for last hour (mm)
+            weather_info['snow'] = round(data['current']['snow']['1h'], 1)      # snow volume for last hour (mm)
         else:
             weather_info['snow'] = 0.0
 
         if 'uvi' in data['current']:
-            weather_info['uvi'] = data['current']['uvi']    # Midday UV index
+            weather_info['uvi'] = data['current']['uvi']    # UV index
         else:
             weather_info['uvi'] = 0.0
 
