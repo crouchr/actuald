@@ -22,7 +22,7 @@ def get_db_hostname():
     if 'SQL_DB_HOSTNAME' in os.environ:
         hostname = os.environ['SQL_DB_HOSTNAME']
     else:
-        hostname = '192.168.1.15'  # my dev machine
+        hostname = '192.168.1.15'  # xw6600 - my dev machine
     return hostname
 
 

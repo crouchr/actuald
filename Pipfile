@@ -10,9 +10,9 @@ verify_ssl = false
 name = "ermin"
 
 [packages]
-requests = "*"
-mysql-connector-python = "*"
-pytest = "*"
+requests = "==2.25.1"
+pytest = "==6.2.1"
+mysql-connector-python = "==8.0.22"
 metfuncs = {version="1.0.6", index="ermin"}
 
 [dev-packages]

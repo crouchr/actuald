@@ -4,8 +4,8 @@
 # 1000 api calls per day is limit of free account
 
 import time
+import os
 from pprint import pprint
-import sys
 
 import current_weather
 import connect_db
@@ -155,6 +155,7 @@ def main():
 
 
 if __name__ == '__main__':
+    os.environ['PYTHONUNBUFFERED'] = "1"  # does this help with log buffering ?
     print('Waiting...')
-    time.sleep(30)      # FIXME : hack to wait until other services are up
+    time.sleep(60)      # FIXME : hack to wait until other services are up
     main()
