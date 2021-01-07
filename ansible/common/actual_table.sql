@@ -33,3 +33,4 @@ ts_epoch INT NOT NULL,
 sunrise_local TIMESTAMP NOT NULL,
 sunset_local TIMESTAMP NOT NULL
 );
+# THIS IS OBSOLETE !!!!! - see metmini-mysql container instead

@@ -12,8 +12,6 @@ import connect_db
 import locations
 import actuald_funcs
 
-
-
 # fixme - add exception handling
 def insert_rec_to_db(mydb, mycursor, weather_info):
     """
@@ -45,16 +43,19 @@ def insert_rec_to_db(mydb, mycursor, weather_info):
           "visibility, " \
           "rain, " \
           "snow, " \
-          "source," \
+          "met_source," \
           "lat, " \
           "lon, " \
+          "light, " \
+          "alert_sender, " \
+          "alert_event, " \
           "tz, " \
           "tz_offset, " \
           "ts_epoch, " \
           "sunrise_local, " \
           "sunset_local" \
           ") " \
-          "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+          "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
     val = (weather_info['ts_local'],
            weather_info['ts_utc'],
@@ -78,9 +79,12 @@ def insert_rec_to_db(mydb, mycursor, weather_info):
            weather_info['visibility'],
            weather_info['rain'],
            weather_info['snow'],
-           weather_info['source'],
+           weather_info['met_source'],
            weather_info['lat'],
            weather_info['lon'],
+           weather_info['light'],
+           weather_info['alert_sender'],
+           weather_info['alert_event'],
            weather_info['tz'],
            weather_info['tz_offset'],
            weather_info['ts_epoch'],
@@ -90,7 +94,7 @@ def insert_rec_to_db(mydb, mycursor, weather_info):
 
     mycursor.execute(sql, val)
     mydb.commit()
-    print(mycursor.rowcount, "record inserted into MySQL database OK")
+    print(mycursor.rowcount, "record inserted into MetMini Actual table OK")
 
 
 def main():
@@ -108,7 +112,6 @@ def main():
         # if stage == 'DEV' or stage == 'IDE':
         #     sleep_secs = 10
         #     print("stage=" + stage + " caused sleep_secs to be modified to " + sleep_secs.__str__() + " secs")
-
 
         mydb, mycursor = connect_db.connect_database(db_hostname, "metminidb")
 
@@ -157,5 +160,5 @@ def main():
 if __name__ == '__main__':
     os.environ['PYTHONUNBUFFERED'] = "1"  # does this help with log buffering ?
     print('Waiting...')
-    time.sleep(60)      # FIXME : hack to wait until other services are up
+    time.sleep(300)      # FIXME : hack to wait until other services are up
     main()

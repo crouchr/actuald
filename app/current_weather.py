@@ -31,7 +31,7 @@ def get_current_weather_info(location, lat, lon):
     try:
         weather_info = {}
         flag = True
-        weather_info['source'] = "OpenWeatherMap"       # allows for multiple APIs to be used plus Vantage or other logging weather station
+        weather_info['met_source'] = "OpenWeatherMap"       # allows for multiple APIs to be used plus Vantage or other logging weather station
 
         utc_now = datetime.utcnow()
         hour_utc = utc_now.hour
@@ -58,8 +58,10 @@ def get_current_weather_info(location, lat, lon):
         weather_info['sunrise_local'] = ts_funcs.epoch_to_local(data['current']['sunrise'])     # api = timestamp from the API in UNIX UTC
         weather_info['sunset_local']  = ts_funcs.epoch_to_local(data['current']['sunset'])      # api = timestamp from the API in UNIX UTC
 
-        weather_info['pressure']      = data['current']['pressure']                 # api = sea-level hPa
-        weather_info['wind_speed']    = round(metfuncs.m_per_sec_to_knots(data['current']['wind_speed'])  ,1)   # api = metres/s
+        weather_info['pressure']      = data['current']['pressure']                # api = sea-level hPa
+        weather_info['wind_speed']    = round(metfuncs.m_per_sec_to_knots(data['current']['wind_speed']), 1)   # api = metres/s
+
+        weather_info['light'] = -1.0    # not available in API but in readiness for a weather station that does
 
         # api returns m/s
         weather_info['wind_strength'] = metfuncs.kph_to_beaufort(metfuncs.metres_per_sec_to_kph(data['current']['wind_speed'])) # metres/s
@@ -103,6 +105,18 @@ def get_current_weather_info(location, lat, lon):
         # fixme - this is a list - so need to store it as a list ? - store a assume a single item list for now until understand the API response more
         weather_info['main']          = data['current']['weather'][0]['main']
         weather_info['description']   = data['current']['weather'][0]['description']
+
+        if 'alerts' in data:
+            alert_sender = data['alerts'][0]['sender_name']
+            if alert_sender == 'Go to UK Met Office':       # what a shit name
+                alert_sender = 'UK Met Office'
+            weather_info['alert_sender'] = alert_sender
+            weather_info['alert_event']  = data['alerts'][0]['event']
+            #weather_info['alert_description'] = data['alerts'][0]['description']
+        else:
+            weather_info['alert_sender'] = 'none'
+            weather_info['alert_event']  = 'none'
+            #weather_info['alert_description'] = 'none'
 
     except Exception as e:
         print("get_current_weather_info() : error : " + e.__str__())
