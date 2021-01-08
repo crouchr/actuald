@@ -7,6 +7,7 @@ def connect_database(hostname, db_name):
 
     :return:
     """
+    print('connect_database() : hostname=' + hostname)
     mydb = mysql.connector.connect(
         host=hostname,
         database=db_name,
