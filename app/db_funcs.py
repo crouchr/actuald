@@ -44,9 +44,11 @@ def insert_rec_to_db(mydb, mycursor, weather_info, container_version):
           "ts_epoch, " \
           "sunrise_local, " \
           "sunset_local," \
+          "image_name, " \
+          "video_name," \
           "container_version" \
           ") " \
-          "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+          "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         val = (
            weather_info['ts_local'],
@@ -86,6 +88,8 @@ def insert_rec_to_db(mydb, mycursor, weather_info, container_version):
            weather_info['ts_epoch'],
            weather_info['sunrise_local'],
            weather_info['sunset_local'],
+           weather_info['image_name'],
+           weather_info['video_name'],
            container_version
            )
 

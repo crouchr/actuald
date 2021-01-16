@@ -117,6 +117,9 @@ def get_current_weather_info(location, lat, lon):
         else:
             weather_info['uvi'] = 0.0
 
+        weather_info['image_name'] = 'reserved'     # taken from webcam-service when implemented
+        weather_info['video_name'] = 'reserved'     # taken from webcam-service when implemented
+
         # fixme - this is a list - so need to store it as a list ? - store a assume a single item list for now until understand the API response more
         weather_info['main']          = data['current']['weather'][0]['main']
         weather_info['description']   = data['current']['weather'][0]['description']
