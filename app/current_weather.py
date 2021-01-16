@@ -11,7 +11,7 @@ import julian
 import time
 from pprint import pprint
 import ts_funcs
-
+import call_rest_api
 
 # Stockcross height is 129m
 # https://getoutside.ordnancesurvey.co.uk/local/stockcross-west-berkshire
@@ -28,10 +28,15 @@ def get_current_weather_info(location, lat, lon):
     API_KEY = 'ab4b5be3e0bf875659c638ded9decd79'
     url = "https://api.openweathermap.org/data/2.5/onecall?lat=%s&lon=%s&appid=%s&units=metric&exclude=minutely,hourly,daily" % (lat, lon, API_KEY)
 
+    light_service_endpoint = 'http://192.168.1.180:9503'
+
     try:
         weather_info = {}
         flag = True
         weather_info['met_source'] = "OpenWeatherMap"       # allows for multiple APIs to be used plus Vantage or other logging weather station
+
+        query = {}
+        query['app_name'] = 'actuald'
 
         utc_now = datetime.utcnow()
         hour_utc = utc_now.hour
@@ -61,22 +66,32 @@ def get_current_weather_info(location, lat, lon):
         weather_info['pressure']      = data['current']['pressure']                # api = sea-level hPa
         weather_info['wind_speed']    = round(metfuncs.m_per_sec_to_knots(data['current']['wind_speed']), 1)   # api = metres/s
 
-        weather_info['light'] = -1.0    # not available in API but in readiness for a weather station that does
+        # call to light-service to get light levels
+        status_code, response_dict = call_rest_api.call_rest_api(light_service_endpoint + '/get_lux', query)
+        weather_info['light'] = response_dict['lux']
+        weather_info['light_condition'] = response_dict['sky_condition']
 
         # api returns m/s
         weather_info['wind_strength'] = metfuncs.kph_to_beaufort(metfuncs.metres_per_sec_to_kph(data['current']['wind_speed'])) # metres/s
 
         weather_info['wind_deg']      = data['current']['wind_deg']
         weather_info['wind_quadrant'] = metfuncs.wind_deg_to_quadrant(weather_info['wind_deg'])
+        weather_info['wind_rose']     = '---'   # fixme - not yet implemented
         weather_info['temp']          = round(data['current']['temp'], 1)
         weather_info['feels_like']    = round(data['current']['feels_like'], 1)
         weather_info['dew_point']     = round(data['current']['dew_point'], 1)
         weather_info['humidity']      = data['current']['humidity']     # percent
         weather_info['coverage']      = data['current']['clouds']       # percent
         weather_info['visibility']    = data['current']['visibility']   # average (metres)
-        weather_info['location']      = location                        # how close ?
 
-    # optional fields ?
+        if location == 'Stockcross, UK':
+            location_code = 'UKXX0097'  # Newbury
+        else:
+            location_code = 'UNKNOWN'
+        weather_info['location']      = location            # how close ?
+        weather_info['location_code'] = location_code       # see https://weather.codes/united-kingdom/
+
+        # optional fields ?
         if 'wind_gust' in data['current']:
             weather_info['wind_gust'] = round(metfuncs.m_per_sec_to_knots(data['current']['wind_gust']) ,1)
         else:
@@ -105,6 +120,7 @@ def get_current_weather_info(location, lat, lon):
         # fixme - this is a list - so need to store it as a list ? - store a assume a single item list for now until understand the API response more
         weather_info['main']          = data['current']['weather'][0]['main']
         weather_info['description']   = data['current']['weather'][0]['description']
+        weather_info['condition_code'] = data['current']['weather'][0]['id'] # use OpenWeather IDs for all
 
         if 'alerts' in data:
             alert_sender = data['alerts'][0]['sender_name']

@@ -4,6 +4,7 @@
 # Fastnet Rock : stormy weather
 # for free tier of 1000 api calls per day I can have 6 locations
 # FIXME - there may be a utf-8 issue with llanfaifechen - needs more investigation - caused exception
+# FIXME : add location_code to this structure for now - see https://weather.codes/united-kingdom/
 
 import actuald_funcs
 

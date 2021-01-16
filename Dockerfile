@@ -12,6 +12,9 @@ LABEL description="MetMini ActualD container"
 ENV LC_ALL=en_US.utf-8
 ENV LANG=en_US.utf-8
 
+# generate logs in unbuffered mode
+ENV PYTHONUNBUFFERED=1
+
 # Install pyenv - https://gist.github.com/jprjr/7667947
 # =====================================================
 # Dependencies for installing pyenv
