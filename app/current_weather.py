@@ -66,10 +66,14 @@ def get_current_weather_info(location, lat, lon):
         weather_info['pressure']      = data['current']['pressure']                # api = sea-level hPa
         weather_info['wind_speed']    = round(metfuncs.m_per_sec_to_knots(data['current']['wind_speed']), 1)   # api = metres/s
 
-        # call to light-service to get light levels
-        status_code, response_dict = call_rest_api.call_rest_api(light_service_endpoint + '/get_lux', query)
-        weather_info['light'] = response_dict['lux']
-        weather_info['light_condition'] = response_dict['sky_condition']
+        # call to light-service to get light levels - if Stockcross
+        if location == 'Stockcross, UK':
+            status_code, response_dict = call_rest_api.call_rest_api(light_service_endpoint + '/get_lux', query)
+            weather_info['light'] = response_dict['lux']
+            weather_info['light_condition'] = response_dict['sky_condition']
+        else:
+            weather_info['light'] = -1.0
+            weather_info['light_condition'] = 'not applicable'
 
         # api returns m/s
         weather_info['wind_strength'] = metfuncs.kph_to_beaufort(metfuncs.metres_per_sec_to_kph(data['current']['wind_speed'])) # metres/s
