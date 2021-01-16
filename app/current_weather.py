@@ -117,6 +117,9 @@ def get_current_weather_info(location, lat, lon):
         else:
             weather_info['uvi'] = 0.0
 
+        weather_info['synopsis']   = 'reserved'     # New function to go into forecast-service - i.e. how is current weather summarised from known conditions
+        weather_info['synopsis_code'] = -1          # New function to go into forecast-service
+
         weather_info['image_name'] = 'reserved'     # taken from webcam-service when implemented
         weather_info['video_name'] = 'reserved'     # taken from webcam-service when implemented
 

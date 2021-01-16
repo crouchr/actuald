@@ -35,6 +35,8 @@ def insert_rec_to_db(mydb, mycursor, weather_info, container_version):
           "lon, " \
           "location_code, " \
           "condition_code, " \
+          "synopsis, " \
+          "synopsis_code, " \
           "light, " \
           "light_condition, " \
           "alert_sender, " \
@@ -48,7 +50,7 @@ def insert_rec_to_db(mydb, mycursor, weather_info, container_version):
           "video_name," \
           "container_version" \
           ") " \
-          "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+          "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         val = (
            weather_info['ts_local'],
@@ -79,6 +81,8 @@ def insert_rec_to_db(mydb, mycursor, weather_info, container_version):
            weather_info['lon'],
            weather_info['location_code'],
            weather_info['condition_code'],
+           weather_info['synopsis'],
+           weather_info['synopsis_code'],
            weather_info['light'],
            weather_info['light_condition'],
            weather_info['alert_sender'],
