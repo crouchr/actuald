@@ -74,6 +74,6 @@ def main():
 
 if __name__ == '__main__':
     os.environ['PYTHONUNBUFFERED'] = "1"  # does this help with log buffering ?
-    #print('Waiting...')
-    #time.sleep(300)      # FIXME : hack to wait until other services are up
+    print('Waiting 3 mins to allow MySQL to come up...')
+    time.sleep(180)      # FIXME : hack to wait until other services are up
     main()
