@@ -6,9 +6,9 @@
 # FIXME - there may be a utf-8 issue with llanfaifechen - needs more investigation - caused exception
 # FIXME : add location_code to this structure for now - see https://weather.codes/united-kingdom/
 
-import actuald_funcs
+import get_env
 
-stage = actuald_funcs.get_stage()
+stage = get_env.get_stage()
 
 if stage == 'DEV' or stage == 'IDE':
     locations = [
