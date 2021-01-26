@@ -49,7 +49,8 @@ def main():
                     log_msg = "Read OpenWeatherAPI data OK for " + place['location'].__str__()  # API data read OK
                     pprint(weather_info)
                     db_funcs.insert_rec_to_db(mydb, mycursor, weather_info, container_version)
-                    append_actual_rec.append_weather_info(weather_info, container_version)     # add to continuous file
+                    if place['location'] == 'Stockcross, UK':
+                        append_actual_rec.append_weather_info(weather_info, container_version)     # add to continuous file
                     print(log_msg)
                     time.sleep(5)                   # crude rate-limit
                 else:                               # API data not read OK
