@@ -1,10 +1,10 @@
-# append a weather record for consumption by 3rd parties e.g. wunderground
+# append a weather record for consumption by 3rd parties e.g. wunderground API
 import time
 import definitions
 import traceback
 
 
-# main + description will be replaced with synopsis in future
+# 'main + description' will be replaced with 'synopsis' in future
 def append_weather_info(weather_info, container_version):
     """
     Append a simple record to actuald.tsv
@@ -38,7 +38,7 @@ def append_weather_info(weather_info, container_version):
             weather_info['main'] + '(' + weather_info['description'] + ')' + '\t' + \
             weather_info['synopsis_code'].__str__() + '\n'
 
-        print('actual_rec appended to ' + actual_log_filename + ' => ' + actual_rec)
+        print('actual_rec appended to ' + actual_log_filename + ' => ' + actual_rec.rstrip('\n'))
 
         fp_out = open(actual_log_filename, 'a')
         fp_out.write(actual_rec)
