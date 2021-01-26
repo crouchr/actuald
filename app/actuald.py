@@ -13,6 +13,7 @@ import connect_db
 import locations
 import actuald_funcs
 import db_funcs
+import append_actual_rec
 
 
 def main():
@@ -44,10 +45,11 @@ def main():
             for place in locations.locations:
                 flag, weather_info = current_weather.get_current_weather_info(place['location'], place['lat'], place['lon'])
                 api_calls += 1
-                if flag:                            # API data read OK
+                if flag:
+                    log_msg = "Read OpenWeatherAPI data OK for " + place['location'].__str__()  # API data read OK
                     pprint(weather_info)
                     db_funcs.insert_rec_to_db(mydb, mycursor, weather_info, container_version)
-                    log_msg = "Read OpenWeatherAPI data OK for " + place['location'].__str__()
+                    append_actual_rec.append_weather_info(weather_info, container_version)     # add to continuous file
                     print(log_msg)
                     time.sleep(5)                   # crude rate-limit
                 else:                               # API data not read OK
@@ -74,6 +76,6 @@ def main():
 
 if __name__ == '__main__':
     os.environ['PYTHONUNBUFFERED'] = "1"  # does this help with log buffering ?
-    print('Waiting 3 mins to allow MySQL to come up...')
-    time.sleep(180)      # FIXME : hack to wait until other services are up
+    # print('Waiting 3 mins to allow MySQL to come up...')
+    # time.sleep(180)      # FIXME : hack to wait until other services are up
     main()
