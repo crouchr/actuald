@@ -1,5 +1,3 @@
-
-
 def calc_api_calls(num_locations, sleep_secs):
     """
     Calculate number of api calls that will be made per 24 hours

@@ -2,8 +2,8 @@
 url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
-
 # My Python package repo on web.ermin
+
 [[source]]
 url = "http://192.168.1.102/python-packages"
 verify_ssl = false
@@ -12,8 +12,10 @@ name = "ermin"
 [packages]
 requests = "==2.25.1"
 pytest = "==6.2.1"
-mysql-connector-python = "==8.0.22"
+mysql-connector-python = "==8.0.23"
 metfuncs = {version="1.0.6", index="ermin"}
+idna = "==2.10"
+uuid = "==1.30"
 
 [dev-packages]
 

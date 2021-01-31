@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+# Use Open Weather API to get current weather
+
 import requests
 import json
 from datetime import datetime
@@ -12,21 +14,25 @@ import time
 from pprint import pprint
 import ts_funcs
 import call_rest_api
+import map_location_to_code
+import get_env
 
 # Stockcross height is 129m
 # https://getoutside.ordnancesurvey.co.uk/local/stockcross-west-berkshire
 # https://stackabuse.com/how-to-get-the-current-date-and-time-in-python/
 
+
 # Leave out daily forecast for now
 # need to call this a couple of times in order to determine if pressure is rising, falling etc
-def get_current_weather_info(location, lat, lon):
+def get_current_weather_info(location, lat, lon, uuid):
     """
 
     :return:
     """
     # Free version - FIXME : read from an ENV var
-    API_KEY = 'ab4b5be3e0bf875659c638ded9decd79'
-    url = "https://api.openweathermap.org/data/2.5/onecall?lat=%s&lon=%s&appid=%s&units=metric&exclude=minutely,hourly,daily" % (lat, lon, API_KEY)
+    #API_KEY = 'ab4b5be3e0bf875659c638ded9decd79'
+    api_key = get_env.get_open_weather_api_key()
+    url = "https://api.openweathermap.org/data/2.5/onecall?lat=%s&lon=%s&appid=%s&units=metric&exclude=minutely,hourly,daily" % (lat, lon, api_key)
 
     light_service_endpoint = 'http://192.168.1.180:9503'
 
@@ -35,8 +41,12 @@ def get_current_weather_info(location, lat, lon):
         flag = True
         weather_info['met_source'] = "OpenWeatherMap"       # allows for multiple APIs to be used plus Vantage or other logging weather station
 
+        # query for Light Level
         query = {}
         query['app_name'] = 'actuald'
+        query['uuid'] = uuid
+
+        weather_info['uuid'] = uuid
 
         utc_now = datetime.utcnow()
         hour_utc = utc_now.hour
@@ -63,7 +73,7 @@ def get_current_weather_info(location, lat, lon):
         weather_info['sunrise_local'] = ts_funcs.epoch_to_local(data['current']['sunrise'])     # api = timestamp from the API in UNIX UTC
         weather_info['sunset_local']  = ts_funcs.epoch_to_local(data['current']['sunset'])      # api = timestamp from the API in UNIX UTC
 
-        weather_info['pressure']      = data['current']['pressure']                # api = sea-level hPa
+        weather_info['pressure']      = round(float(data['current']['pressure']), 1)            # api = sea-level hPa
         weather_info['wind_speed']    = round(metfuncs.m_per_sec_to_knots(data['current']['wind_speed']), 1)   # api = metres/s
 
         # call to light-service to get light levels - if Stockcross
@@ -88,12 +98,12 @@ def get_current_weather_info(location, lat, lon):
         weather_info['coverage']      = data['current']['clouds']       # percent
         weather_info['visibility']    = data['current']['visibility']   # average (metres)
 
-        if location == 'Stockcross, UK':
-            location_code = 'UKXX0097'  # Newbury
-        else:
-            location_code = 'UNKNOWN'
+        # if location == 'Stockcross, UK':
+        #     location_code = 'UKXX0097'  # Newbury
+        # else:
+        #     location_code = 'UNKNOWN'
         weather_info['location']      = location            # how close ?
-        weather_info['location_code'] = location_code       # see https://weather.codes/united-kingdom/
+        weather_info['location_code'] = map_location_to_code.map_location_to_code(location)
 
         # optional fields ?
         if 'wind_gust' in data['current']:
@@ -134,7 +144,7 @@ def get_current_weather_info(location, lat, lon):
 
         if 'alerts' in data:
             alert_sender = data['alerts'][0]['sender_name']
-            if alert_sender == 'Go to UK Met Office':       # what a shit name
+            if alert_sender == 'Go to UK Met Office':           # what a shit name
                 alert_sender = 'UK Met Office'
             weather_info['alert_sender'] = alert_sender
             weather_info['alert_event']  = data['alerts'][0]['event']
@@ -142,10 +152,9 @@ def get_current_weather_info(location, lat, lon):
         else:
             weather_info['alert_sender'] = 'none'
             weather_info['alert_event']  = 'none'
-            #weather_info['alert_description'] = 'none'
 
     except Exception as e:
-        print("get_current_weather_info() : error : " + e.__str__())
+        print('get_current_weather_info() : uuid=' + uuid + ', error : ' + e.__str__())
         flag = False
 
     return flag, weather_info

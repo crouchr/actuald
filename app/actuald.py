@@ -6,9 +6,10 @@
 import time
 import os
 from pprint import pprint
+import uuid
 
 import get_env
-import current_weather
+import open_weather_map
 import connect_db
 import locations
 import actuald_funcs
@@ -22,8 +23,7 @@ def main():
     sleep_secs = 600        # normal poll every 10 minutes
 
     try:
-        log_msg = "actuald started"
-        print(log_msg)
+        print("actuald started, version=" + get_env.get_version())
 
         db_hostname = get_env.get_db_hostname()
         stage = get_env.get_stage()
@@ -43,10 +43,11 @@ def main():
             print("container_version : " + container_version)
 
             for place in locations.locations:
-                flag, weather_info = current_weather.get_current_weather_info(place['location'], place['lat'], place['lon'])
+                uuid = uuid.uuid1()           # make a UUID based on the host ID and current time
+                flag, weather_info = open_weather_map.get_current_weather_info(place['location'], place['lat'], place['lon'], uuid)
                 api_calls += 1
                 if flag:
-                    log_msg = "Read OpenWeatherAPI data OK for " + place['location'].__str__()  # API data read OK
+                    print("Read OpenWeatherMap API data OK for " + place['location'].__str__() + ', uuid=' + uuid)  # API data read OK
                     pprint(weather_info)
                     db_funcs.insert_rec_to_db(mydb, mycursor, weather_info, container_version)
                     if place['location'] == 'Stockcross, UK':
@@ -54,7 +55,7 @@ def main():
                     print(log_msg)
                     time.sleep(5)                   # crude rate-limit
                 else:                               # API data not read OK
-                    log_msg = "main() : error : failed to read API weather data for " + place['location'].__str__()
+                    log_msg = 'main() : uuid=' + uuid + ', error : failed to read API weather data for ' + place['location'].__str__()
                     sleep_secs_short = 120         # wait to let flaky home network connectivity restore
                     print(log_msg)
                     print("short waiting...")
@@ -71,12 +72,10 @@ def main():
             time.sleep(sleep_secs)
 
     except Exception as e:
-        log_msg = "main() : error : " + e.__str__()
+        log_msg = 'main() : uuid=' + uuid + ', error : ' + e.__str__()
         print(log_msg)
 
 
 if __name__ == '__main__':
     os.environ['PYTHONUNBUFFERED'] = "1"  # does this help with log buffering ?
-    # print('Waiting 3 mins to allow MySQL to come up...')
-    # time.sleep(180)      # FIXME : hack to wait until other services are up
     main()

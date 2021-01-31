@@ -49,8 +49,9 @@ def insert_rec_to_db(mydb, mycursor, weather_info, container_version):
           "image_name, " \
           "video_name," \
           "container_version" \
+          "uuid" \
           ") " \
-          "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+          "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         val = (
            weather_info['ts_local'],
@@ -94,13 +95,14 @@ def insert_rec_to_db(mydb, mycursor, weather_info, container_version):
            weather_info['sunset_local'],
            weather_info['image_name'],
            weather_info['video_name'],
-           container_version
+           container_version,
+           weather_info['uuid']
            )
 
         mycursor.execute(sql, val)
         mydb.commit()
-        print(mycursor.rowcount, "record inserted into MetMini Actual table OK")
+        print('uuid=' + weather_info['uuid'] + ', ' + mycursor.rowcount, 'record inserted into MetMini Actual table OK')
 
     except Exception as e:
-        log_msg = "insert_rec_to_db() : error : " + e.__str__()
+        log_msg = 'insert_rec_to_db() : uuid=' + weather_info['uuid'] + ', error : ' + e.__str__()
         print(log_msg)
