@@ -30,7 +30,7 @@ def insert_rec_to_db(mydb, mycursor, weather_info, container_version):
           "rain, " \
           "snow, " \
           "coverage, " \
-          "met_source," \
+          "met_source, " \
           "lat, " \
           "lon, " \
           "location_code, " \
@@ -47,9 +47,9 @@ def insert_rec_to_db(mydb, mycursor, weather_info, container_version):
           "sunrise_local, " \
           "sunset_local," \
           "image_name, " \
-          "video_name," \
+          "video_name, " \
           "container_version" \
-              ") " \
+          ") " \
           "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         val = (
@@ -99,7 +99,7 @@ def insert_rec_to_db(mydb, mycursor, weather_info, container_version):
 
         mycursor.execute(sql, val)
         mydb.commit()
-        print('uuid=' + weather_info['uuid'] + ', ' + mycursor.rowcount.__str__() + 'record inserted into MetMini Actual table OK')
+        print('uuid=' + weather_info['uuid'] + ', ' + mycursor.rowcount.__str__() + ' record inserted into MetMini Actual table OK')
 
     except Exception as e:
         log_msg = 'insert_rec_to_db() : uuid=' + weather_info['uuid'] + ', error : ' + e.__str__()
