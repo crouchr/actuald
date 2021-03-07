@@ -10,9 +10,11 @@ import get_env
 
 stage = get_env.get_stage()
 
+# Need two locations for testing as a minimum
 if stage == 'DEV' or stage == 'IDE':
     locations = [
-        {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"}
+        {"location": "Stockcross, UK", "lat": "51.41460037", "lon": "-1.37486378"},
+        {"location": "Chamonix, FR", "lat": "45.9237", "lon": "6.8694"},
     ]
 elif stage == 'PRD':    # 5 locations = 720 api calls per day
     locations = [

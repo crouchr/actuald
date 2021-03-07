@@ -37,6 +37,7 @@ def append_weather_info(weather_info, container_version):
             weather_info['uvi'].__str__() + '\t' + \
             weather_info['main'] + '(' + weather_info['description'] + ')' + '\t' + \
             weather_info['synopsis_code'].__str__() + '\t' + \
+            weather_info['coverage'].__str__() + '\t' + \
             weather_info['uuid'].__str__() + '\n'
 
         print('uuid=' + weather_info['uuid'] + ', actual_rec appended to ' + actual_log_filename + ' => ' + actual_rec.rstrip('\n'))

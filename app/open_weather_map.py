@@ -30,8 +30,9 @@ def get_current_weather_info(location, lat, lon, uuid):
     :return:
     """
     # Free version - FIXME : read from an ENV var
-    #API_KEY = 'ab4b5be3e0bf875659c638ded9decd79'
-    api_key = get_env.get_open_weather_api_key()
+
+    #api_key = get_env.get_open_weather_api_key()
+    api_key = 'ab4b5be3e0bf875659c638ded9decd79'
     url = "https://api.openweathermap.org/data/2.5/onecall?lat=%s&lon=%s&appid=%s&units=metric&exclude=minutely,hourly,daily" % (lat, lon, api_key)
 
     light_service_endpoint = 'http://192.168.1.180:9503'
@@ -44,9 +45,9 @@ def get_current_weather_info(location, lat, lon, uuid):
         # query for Light Level
         query = {}
         query['app_name'] = 'actuald'
-        query['uuid'] = uuid
+        query['uuid'] = uuid.__str__()
 
-        weather_info['uuid'] = uuid
+        weather_info['uuid'] = uuid.__str__()
 
         utc_now = datetime.utcnow()
         hour_utc = utc_now.hour
@@ -56,7 +57,8 @@ def get_current_weather_info(location, lat, lon, uuid):
         response = requests.get(url)
 
         data = json.loads(response.text)
-        print("Response from OpenWeatherAPI : " + data.__str__())
+
+        print("status_code=" + response.status_code.__str__() + ", REST API response from OpenWeatherAPI : " + data.__str__())
         time.sleep(2)                   # crude rate limit
 
         weather_info['lat']           = data['lat']
@@ -132,7 +134,7 @@ def get_current_weather_info(location, lat, lon, uuid):
             weather_info['uvi'] = 0.0
 
         weather_info['synopsis']   = 'reserved'     # New function to go into forecast-service - i.e. how is current weather summarised from known conditions
-        weather_info['synopsis_code'] = -1          # New function to go into forecast-service
+        weather_info['synopsis_code'] = -999        # New function to go into forecast-service
 
         weather_info['image_name'] = 'reserved'     # taken from webcam-service when implemented
         weather_info['video_name'] = 'reserved'     # taken from webcam-service when implemented
@@ -144,7 +146,7 @@ def get_current_weather_info(location, lat, lon, uuid):
 
         if 'alerts' in data:
             alert_sender = data['alerts'][0]['sender_name']
-            if alert_sender == 'Go to UK Met Office':           # what a shit name
+            if alert_sender == 'Go to UK Met Office':           # what a shit name !
                 alert_sender = 'UK Met Office'
             weather_info['alert_sender'] = alert_sender
             weather_info['alert_event']  = data['alerts'][0]['event']
@@ -153,8 +155,10 @@ def get_current_weather_info(location, lat, lon, uuid):
             weather_info['alert_sender'] = 'none'
             weather_info['alert_event']  = 'none'
 
+        return flag, weather_info
+
     except Exception as e:
-        print('get_current_weather_info() : uuid=' + uuid + ', error : ' + e.__str__())
+        print('get_current_weather_info() : uuid=' + uuid.__str__() + ', error : ' + e.__str__())
         flag = False
 
-    return flag, weather_info
+

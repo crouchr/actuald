@@ -46,8 +46,6 @@ RUN yum install -y nmap
 # Copy application and files
 RUN mkdir /app
 COPY app/*.py /app/
-COPY etc/entrypoint.sh /etc
-RUN ["chmod", "+x", "/etc/entrypoint.sh"]
 
 USER python_user
 # Install Python dependencies
@@ -57,4 +55,6 @@ RUN pipenv install --system --deploy --verbose
 
 WORKDIR /app
 
-ENTRYPOINT ["/etc/entrypoint.sh"]
+# run Python unbuffered so the logs are flushed
+#CMD ["python3", "-u", "actuald.py"]
+CMD ["tail", "-f", "/dev/null"]
