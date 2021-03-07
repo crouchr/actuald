@@ -1,7 +1,6 @@
 # append a weather record for consumption by Machine Learning
-# Format is same as jena weather training set as per 'Deep Learning with Python' page 207
+# Format is very similar to jena weather training set as per 'Deep Learning with Python' page 207
 
-import time
 import definitions
 import traceback
 import pytz
@@ -57,7 +56,3 @@ def append_mlearning_info(weather_info):
     except Exception as e:
         traceback.print_exc()
         return False
-
-
-if __name__ == '__main__':
-    tst = get_jena_timestamp()
