@@ -53,8 +53,8 @@ def main():
                     pprint(weather_info)
                     db_funcs.insert_rec_to_db(mydb, mycursor, weather_info, container_version)
                     if place['location'] == 'Stockcross, UK':
-                        append_actual_rec.append_weather_info(weather_info, container_version)     # add to continuous file
-                        append_mlearning_rec.append_mlearning_info(weather_info)            # data for Machine learning
+                        append_actual_rec.append_weather_info(weather_info, container_version)      # add to continuous file
+                        append_mlearning_rec.append_mlearning_info(weather_info)                    # data for Machine learning
                     time.sleep(5)                   # crude rate-limit
                 else:                               # API data not read OK
                     log_msg = 'main() : uuid=' + this_uuid.__str__() + ', error : failed to read API weather data for ' + place['location'].__str__()
