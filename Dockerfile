@@ -30,9 +30,6 @@ RUN pyenv install -v 3.8.5
 RUN pyenv global 3.8.5
 RUN pyenv rehash
 
-# RUN yum install -y python3 python3-devel python3-pip
-#RUN yum install -y python3-devel
-
 USER root
 # Needed for mariadb-connector-c
 RUN yum install -y http://repo.okay.com.mx/centos/7/x86_64/release/okay-release-1-1.noarch.rpm
@@ -56,5 +53,5 @@ RUN pipenv install --system --deploy --verbose
 WORKDIR /app
 
 # run Python unbuffered so the logs are flushed
-#CMD ["python3", "-u", "actuald.py"]
-CMD ["tail", "-f", "/dev/null"]
+CMD ["python3", "-u", "actuald.py"]
+#CMD ["tail", "-f", "/dev/null"]
