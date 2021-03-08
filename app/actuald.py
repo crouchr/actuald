@@ -38,6 +38,7 @@ def main():
             sys.exit(-1)
 
         while True:
+            loop_start_secs = time.time()
             print("---------------")
             print("Local time (not UTC) : " + time.ctime())
             print("SQL database hosted on : " + db_hostname)
@@ -70,8 +71,11 @@ def main():
             print("stats => version=" + container_version + ", " + api_calls.__str__() + " API call(s) in " + running_time.__str__() +
                   " secs, estimated api_calls_per_day=" + api_calls_per_day.__str__())
 
-            print("waiting...")
-            time.sleep(sleep_secs)
+            loop_end_secs = time.time()
+            processing_secs = loop_end_secs - loop_start_secs
+            poll_wait_secs = sleep_secs - processing_secs
+            print('waiting for ' + int(poll_wait_secs).__str__() + '...')
+            time.sleep(poll_wait_secs)
 
     except Exception as e:
         log_msg = 'main() : uuid=' + this_uuid.__str__() + ', error : ' + e.__str__()
