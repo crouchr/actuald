@@ -74,7 +74,7 @@ def main():
             loop_end_secs = time.time()
             processing_secs = loop_end_secs - loop_start_secs
             poll_wait_secs = sleep_secs - processing_secs
-            print('waiting for ' + int(poll_wait_secs).__str__() + '...')
+            print('waiting for ' + int(poll_wait_secs).__str__() + ' secs...')
             time.sleep(poll_wait_secs)
 
     except Exception as e:
