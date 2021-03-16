@@ -38,48 +38,54 @@ def main():
             sys.exit(-1)
 
         while True:
-            loop_start_secs = time.time()
-            print("---------------")
-            print("Local time (not UTC) : " + time.ctime())
-            print("SQL database hosted on : " + db_hostname)
-            print("Stage : " + stage)
-            print("container_version : " + container_version)
+            try:
+                loop_start_secs = time.time()
+                print("---------------")
+                print("Local time (not UTC) : " + time.ctime())
+                print("SQL database hosted on : " + db_hostname)
+                print("Stage : " + stage)
+                print("container_version : " + container_version)
 
-            for place in locations.locations:
-                this_uuid = uuid.uuid4().__str__()
-                flag, weather_info = open_weather_map.get_current_weather_info(place['location'], place['lat'], place['lon'], this_uuid.__str__())
-                api_calls += 1
-                if flag:
-                    print("Read OpenWeatherMap API data OK for " + place['location'].__str__() + ', uuid=' + this_uuid.__str__())  # API data read OK
-                    pprint(weather_info)
-                    db_funcs.insert_rec_to_db(mydb, mycursor, weather_info, container_version)
-                    if place['location'] == 'Stockcross, UK':
-                        append_actual_rec.append_weather_info(weather_info, container_version)      # add to continuous file
-                        append_mlearning_rec.append_mlearning_info(weather_info)                    # data for Machine learning
-                    time.sleep(5)                   # crude rate-limit
-                else:                               # API data not read OK
-                    log_msg = 'main() : uuid=' + this_uuid.__str__() + ', error : failed to read API weather data for ' + place['location'].__str__()
-                    sleep_secs_short = 120          # wait to let flaky home network connectivity restore
-                    print(log_msg)
-                    print("short waiting...")
-                    time.sleep(sleep_secs_short)
+                for place in locations.locations:
+                    this_uuid = uuid.uuid4().__str__()
+                    flag, weather_info = open_weather_map.get_current_weather_info(place['location'], place['lat'], place['lon'], this_uuid.__str__())
+                    api_calls += 1
+                    if flag:
+                        print("Read OpenWeatherMap API data OK for " + place['location'].__str__() + ', uuid=' + this_uuid.__str__())  # API data read OK
+                        pprint(weather_info)
+                        db_funcs.insert_rec_to_db(mydb, mycursor, weather_info, container_version)
+                        if place['location'] == 'Stockcross, UK':
+                            append_actual_rec.append_weather_info(weather_info, container_version)      # add to continuous file
+                            append_mlearning_rec.append_mlearning_info(weather_info)                    # data for Machine learning
+                        time.sleep(5)                   # crude rate-limit
+                    else:                               # API data not read OK
+                        log_msg = 'main() : uuid=' + this_uuid.__str__() + ', error : failed to read API weather data for ' + place['location'].__str__()
+                        sleep_secs_short = 120          # wait to let flaky home network connectivity restore
+                        print(log_msg)
+                        print("short waiting...")
+                        time.sleep(sleep_secs_short)
 
-            # update stats
-            now = time.time()
-            running_time = int(now - start_time)
-            api_calls_per_day = actuald_funcs.calc_api_calls(len(locations.locations), sleep_secs)
-            print("stats => version=" + container_version + ", " + api_calls.__str__() + " API call(s) in " + running_time.__str__() +
-                  " secs, estimated api_calls_per_day=" + api_calls_per_day.__str__())
+                # update stats
+                now = time.time()
+                running_time = int(now - start_time)
+                api_calls_per_day = actuald_funcs.calc_api_calls(len(locations.locations), sleep_secs)
+                print("stats => version=" + container_version + ", " + api_calls.__str__() + " API call(s) in " + running_time.__str__() +
+                      " secs, estimated api_calls_per_day=" + api_calls_per_day.__str__())
 
-            loop_end_secs = time.time()
-            processing_secs = loop_end_secs - loop_start_secs
-            poll_wait_secs = sleep_secs - processing_secs
-            print('waiting for ' + int(poll_wait_secs).__str__() + ' secs...')
-            time.sleep(poll_wait_secs)
+                loop_end_secs = time.time()
+                processing_secs = loop_end_secs - loop_start_secs
+                poll_wait_secs = sleep_secs - processing_secs
+                print('waiting for ' + int(poll_wait_secs).__str__() + ' secs...')
+                time.sleep(poll_wait_secs)
+
+            except Exception as e:
+                print('main() inner loop : error : ' + e.__str__())
+                print("short waiting...")
+                time.sleep(10)
+                continue        # go back around the loop again
 
     except Exception as e:
-        log_msg = 'main() : uuid=' + this_uuid.__str__() + ', error : ' + e.__str__()
-        # log_msg = 'main() : error : ' + e.__str__()
+        log_msg = 'main() 2 : error : ' + e.__str__()
         print(log_msg)
         traceback.print_exc()
 

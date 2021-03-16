@@ -100,10 +100,6 @@ def get_current_weather_info(location, lat, lon, uuid):
         weather_info['coverage']      = data['current']['clouds']       # percent
         weather_info['visibility']    = data['current']['visibility']   # average (metres)
 
-        # if location == 'Stockcross, UK':
-        #     location_code = 'UKXX0097'  # Newbury
-        # else:
-        #     location_code = 'UNKNOWN'
         weather_info['location']      = location            # how close ?
         weather_info['location_code'] = map_location_to_code.map_location_to_code(location)
 
@@ -159,6 +155,4 @@ def get_current_weather_info(location, lat, lon, uuid):
 
     except Exception as e:
         print('get_current_weather_info() : uuid=' + uuid.__str__() + ', error : ' + e.__str__())
-        flag = False
-
-
+        return False, None
