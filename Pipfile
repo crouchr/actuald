@@ -10,10 +10,11 @@ verify_ssl = false
 name = "ermin"
 
 [packages]
+metfuncs = {version="1.0.25", index="ermin"}
+metminifuncs = {version="1.0.5", index="ermin"}
 requests = "==2.25.1"
 pytest = "==6.2.1"
 mysql-connector-python = "==8.0.23"
-metfuncs = {version="1.0.23", index="ermin"}
 idna = "==2.10"
 uuid = "==1.30"
 pytz = "==2021.1"

@@ -1,11 +1,11 @@
 # append a weather record for consumption by 3rd parties e.g. wunderground API
-import time
-import definitions
+
 import traceback
 
 
+# FIXME : actual_record_timestamp needs to be UTC
 # 'main + description' will be replaced with 'synopsis' in future
-def append_weather_info(weather_info, container_version):
+def append_weather_info(actual_log_filename, weather_info, actual_record_timestamp, container_version):
     """
     Append a simple record to actuald.tsv
 
@@ -13,9 +13,9 @@ def append_weather_info(weather_info, container_version):
     :return:
     """
     try:
-        actual_log_filename = definitions.WEATHER_INFO_DIR + 'actuald.tsv'
 
-        actual_rec = time.ctime() + '\t' +\
+
+        actual_rec = actual_record_timestamp + '\t' +\
             weather_info['met_source'] + '\t' + \
             weather_info['location'] + '\t' + \
             weather_info['location_code'].__str__() + '\t' + \
