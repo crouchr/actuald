@@ -10,7 +10,7 @@ verify_ssl = false
 name = "ermin"
 
 [packages]
-metfuncs = {version="1.0.25", index="ermin"}
+metfuncs = {version="1.0.26", index="ermin"}
 metminifuncs = {version="1.0.5", index="ermin"}
 requests = "==2.25.1"
 pytest = "==6.2.1"
