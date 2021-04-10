@@ -3,8 +3,6 @@
 # i.e. the Daemon that collects met data and stores in Database
 # Can something smaller be built from Alpine or a Python Docker image ?
 # https://stackoverflow.com/questions/46503947/how-to-get-pipenv-running-in-docker
-#FROM registry:5000/gold-centos7:1.0.0
-#FROM centos:centos7.9.2009
 
 FROM centos/python-38-centos7
 LABEL author="Richard Crouch"
@@ -17,40 +15,12 @@ ENV LANG=en_US.utf-8
 # generate logs in unbuffered mode
 ENV PYTHONUNBUFFERED=1
 
-# Install pyenv - https://gist.github.com/jprjr/7667947
-# =====================================================
-# Dependencies for installing pyenv
-#RUN yum -y install git zlib-devel gcc openssl-devel bzip2-devel libffi-devel make
-#RUN useradd -m python_user
-#WORKDIR /home/python_user
-#USER python_user
-#RUN git clone git://github.com/yyuu/pyenv.git .pyenv
-#ENV HOME  /home/python_user
-#ENV PYENV_ROOT $HOME/.pyenv
-#ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
-#RUN pyenv install -v 3.8.5
-#RUN pyenv global 3.8.5
-#RUN pyenv rehash
-
 USER root
-
-# Install mariadb-connector-c
-#RUN yum -y install openssl-devel openssl-libs
-#RUN yum install -y http://repo.okay.com.mx/centos/7/x86_64/release/okay-release-1-1.noarch.rpm
-#ADD http://192.168.1.102/centos7-packages/mariadb-connector-c-3.0.10-1.el7.x86_64.rpm /tmp/
-#RUN yum install -y /tmp/mariadb-connector-c-3.0.10-1.el7.x86_64.rpm
-#RUN yum install -y mariadb-libs
-#RUN yum install -y mariadb-devel
-#RUN yum install -y mariadb-connector-c
-
-# Debugging
-#RUN yum install -y nmap
 
 # Copy application and files
 RUN mkdir /app
 COPY app/*.py /app/
 
-#USER python_user - only needed if install python from source
 # Install Python dependencies
 RUN pip3 install pipenv
 COPY Pipfile* ./
