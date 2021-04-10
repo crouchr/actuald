@@ -50,7 +50,7 @@ USER root
 RUN mkdir /app
 COPY app/*.py /app/
 
-USER python_user
+#USER python_user - only needed if install python from source
 # Install Python dependencies
 RUN pip3 install pipenv
 COPY Pipfile* ./
@@ -59,5 +59,5 @@ RUN pipenv install --system --deploy --verbose
 WORKDIR /app
 
 # run Python unbuffered so the logs are flushed
-#CMD ["python3", "-u", "actuald.py"]
-CMD ["tail", "-f", "/dev/null"]
+CMD ["python3", "-u", "actuald.py"]
+#CMD ["tail", "-f", "/dev/null"]
