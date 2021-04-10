@@ -53,7 +53,7 @@ def main():
         while True:
             try:
                 print('waiting to sync main loop...')
-                sync_start_time.wait_until_minute_flip(10)
+                # sync_start_time.wait_until_minute_flip(10) FIXME - remove when debuggin fixed
                 print('---------------------------------')
                 start_secs = time.time()
                 mlearning_record_timestamp = jena_data.get_jena_timestamp()
